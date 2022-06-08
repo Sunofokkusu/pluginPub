@@ -80,9 +80,11 @@
 		<?php
 			global $post;
 			$custom = get_post_custom($post->ID);
-			$follow = $custom["follow"][0]; 
+			if(isset($custom["follow"][0])){
+				$follow = $custom["follow"][0];
+			}				
 		?>
-		<input type="checkbox" name="follow" <?php if( $follow == true ) { ?>checked="checked"<?php } ?> /> 
+		<input type="checkbox" name="follow" <?php if(isset($follow) && $follow == true ) { ?>checked="checked"<?php } ?> /> 
     </p>
 	
 	<!-- Calendrier pour saisir une date de début de publication de la publicité -->
@@ -111,9 +113,11 @@
 		<?php
 			global $post;
 			$custom = get_post_custom($post->ID);
-			$mobile = $custom["mobile"][0]; 
+			if(isset($custom["mobile"][0])){
+				$mobile = $custom["mobile"][0]; 
+			}
 		?>
-		<input type="checkbox" name="mobile" <?php if( $mobile == true ) { ?>checked="checked"<?php } ?> /> 
+		<input type="checkbox" name="mobile" <?php if( isset($mobile) && $mobile == true ) { ?>checked="checked"<?php } ?> /> 
     </p>
 </div>
 

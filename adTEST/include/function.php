@@ -156,15 +156,23 @@ function save_meta_boxes( $post_id ) {
     }
 	
 	//Sauvegarde le champ de choix du post-type
-	$cpt = $_POST['cpt']; 
-	update_post_meta($post_id, 'cpt', $cpt,sanitize_text_field( $_POST[$cpt] ));
+	if(isset($_POST['cpt'])){
+		$cpt = $_POST['cpt']; 
+		update_post_meta($post_id, 'cpt', $cpt,sanitize_text_field( $_POST[$cpt] ));
+	}
 	//Sauvegarde le champ de choix de la catégorie
-	$categ = $_POST['categ']; 
-	update_post_meta($post_id, 'categ', $categ,sanitize_text_field( $_POST[$categ] ));
+	if(isset($_POST['categ'])){
+		$categ = $_POST['categ']; 
+		update_post_meta($post_id, 'categ', $categ,sanitize_text_field( $_POST[$categ] ));
+	}
 	//Sauvegarde l'état de la checkbox "follow"
-	update_post_meta($post_id, "follow", $_POST["follow"]);
+	if(isset($_POST['follow'])){
+		update_post_meta($post_id, "follow", $_POST["follow"]);
+	}
 	//Sauvegarde l'état de la checkbox "mobile"
-	update_post_meta($post_id, "mobile", $_POST["mobile"]);
+	if(isset($_POST['mobile'])){
+		update_post_meta($post_id, "mobile", $_POST["mobile"]);
+	}
 	
 	//Sauvegarde les données des champs de texte et calendrier
     $fields = [
@@ -318,11 +326,13 @@ add_action('post_updated_messages','show_error_dates_dispo',1002);
 /*Fonction qui affiche l'erreur si la publicité à publier est prévue en même temps qu'une autre sur les mêmes post-type et catégorie*/
 function show_error_dates_dispo(){
 	if(get_post_type() == 'regie_publicitaire'){
-		if(get_the_ID() == $_SESSION['id']){
-			if ($msg = get_transient( "acme_plugin_error_msg_error" )){
-				?><div class="error">
-					<p><?php echo $msg; ?></p>
-				</div><?php
+		if(isset($_SESSION['id'])){
+			if(get_the_ID() == $_SESSION['id']){
+				if ($msg = get_transient( "acme_plugin_error_msg_error" )){
+					?><div class="error">
+						<p><?php echo $msg; ?></p>
+					</div><?php
+				}
 			}
 		}
 	}

@@ -32,7 +32,9 @@ class ad_widget extends WP_Widget {
 		$date = date('y-m-d'); //récupération de la date du jour		
 		//Loop permettant l'affichage des posts du post-type donné en paramètre
         if ($pub->have_posts()) :
-            echo $args['before_widget']; //Affiche le code avant de widget s'il y en a 
+			if(isset($args['before_widget'])){
+				echo $args['before_widget']; //Affiche le code avant de widget s'il y en a 
+			}
 			?><ul>
             <?php while ( $pub->have_posts() ) : $pub->the_post(); //tant qu'il y a des posts dans le post-type
 				if(get_post_type($idP) == get_post_meta( get_the_ID(), 'cpt', true )){ //teste si le post-type de la page actuelle correspond au post-type passé en paramètre
@@ -213,7 +215,9 @@ class ad_widget extends WP_Widget {
 				}
             endwhile; ?>
             </ul> 
-            <?php echo $args['after_widget']; //Affiche le code après de widget s'il y en a 
+            <?php if(isset($args['after_widget'])){
+				echo $args['after_widget']; //Affiche le code après de widget s'il y en a 
+			}
             wp_reset_postdata(); // Reset la variable globale $the_post 
         endif; 
 	}
